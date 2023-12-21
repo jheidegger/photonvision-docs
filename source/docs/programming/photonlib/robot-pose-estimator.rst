@@ -31,7 +31,7 @@ The API documentation can be found in here: `Java <https://github.wpilib.org/all
 
 Creating a ``PhotonPoseEstimator``
 ----------------------------------
-The PhotonPoseEstimator has a constructor that takes an ``AprilTagFieldLayout`` (see above), ``PoseStrategy``, ``PhotonCamera``, and ``Transform3d``. ``PoseStrategy`` has five possible values:
+The PhotonPoseEstimator has a constructor that takes an ``AprilTagFieldLayout`` (see above), ``PoseStrategy``, ``PhotonCamera``, and ``Transform3d``. ``PoseStrategy`` has six possible values:
 
 * LOWEST_AMBIGUITY
     * Choose the Pose with the lowest ambiguity.
@@ -43,6 +43,8 @@ The PhotonPoseEstimator has a constructor that takes an ``AprilTagFieldLayout`` 
     * Choose the Pose which is closest to the last pose calculated.
 * AVERAGE_BEST_TARGETS
     * Choose the Pose which is the average of all the poses from each tag.
+* MULTI_TAG_PNP
+    * Calculates a new robot position estimate by combining all visible tags.
 
 .. tab-set-code::
    .. code-block:: java
@@ -78,7 +80,7 @@ The PhotonPoseEstimator has a constructor that takes an ``AprilTagFieldLayout`` 
 
 Using a ``PhotonPoseEstimator``
 -------------------------------
-Calling ``update()`` on your ``PhotonPoseEstimator`` will return an ``EstimatedRobotPose``, which includes a ``Pose3d`` of the latest estimated pose (using the selected strategy) along with a ``double`` of the timestamp when the robot pose was estimated. You should be updating your `drivetrain pose estimator <https://docs.wpilib.org/en/latest/docs/software/advanced-controls/state-space/state-space-pose-estimators.html>`_ with the result from the ``PhotonPoseEstimator`` every loop using ``addVisionMeasurement()``. See our `code example <https://github.com/PhotonVision/photonvision/tree/master/photonlib-java-examples/apriltagExample>`_ for more.
+Calling ``update()`` on your ``PhotonPoseEstimator`` will return an ``EstimatedRobotPose``, which includes a ``Pose3d`` of the latest estimated pose (using the selected strategy) along with a ``double`` of the timestamp when the robot pose was estimated. You should be updating your `drivetrain pose estimator <https://docs.wpilib.org/en/latest/docs/software/advanced-controls/state-space/state-space-pose-estimators.html>`_ with the result from the ``PhotonPoseEstimator`` every loop using ``addVisionMeasurement()``.
 
 .. tab-set-code::
    .. rli:: https://raw.githubusercontent.com/PhotonVision/photonvision/357d8a518a93f7a1f8084a79449249e613b605a7/photonlib-java-examples/apriltagExample/src/main/java/frc/robot/PhotonCameraWrapper.java
@@ -100,7 +102,7 @@ Calling ``update()`` on your ``PhotonPoseEstimator`` will return an ``EstimatedR
         }
       }
 
-You should be updating your `drivetrain pose estimator <https://docs.wpilib.org/en/latest/docs/software/advanced-controls/state-space/state-space-pose-estimators.html>`_ with the result from the ``RobotPoseEstimator`` every loop using ``addVisionMeasurement()``. See our :ref:`code example <docs/examples/apriltag:knowledge and equipment needed>` for more.
+You should be updating your `drivetrain pose estimator <https://docs.wpilib.org/en/latest/docs/software/advanced-controls/state-space/state-space-pose-estimators.html>`_ with the result from the ``RobotPoseEstimator`` every loop using ``addVisionMeasurement()``.
 
 Additional ``PhotonPoseEstimator`` Methods
 ------------------------------------------
